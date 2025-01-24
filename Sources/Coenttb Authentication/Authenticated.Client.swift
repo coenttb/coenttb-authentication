@@ -33,7 +33,7 @@ AuthRouter.Output == Auth
     private let auth: Auth
     
     private let router: APIRouter
-    private let buildClient: @Sendable (@escaping @Sendable (API) throws -> URLRequest) -> ClientOutput
+    private let buildClient: @Sendable (@Sendable (API) throws -> URLRequest) -> ClientOutput
     private let authenticatedRouter: Coenttb_Authentication.API<Auth, API>.Router<AuthRouter, APIRouter>
     
     @Dependency(\.defaultSession) var session
@@ -43,7 +43,7 @@ AuthRouter.Output == Auth
         auth: Auth,
         router: APIRouter,
         authRouter: AuthRouter,
-        buildClient: @escaping @Sendable (@escaping @Sendable (API) throws -> URLRequest) -> ClientOutput
+        buildClient: @escaping @Sendable (@Sendable (API) throws -> URLRequest) -> ClientOutput
     ) {
         self.baseURL = baseURL
         self.auth = auth
@@ -93,9 +93,7 @@ extension Client {
     public init(
         baseURL: URL,
         token: String,
-        buildClient: @escaping @Sendable (
-            _ makeRequest: @escaping @Sendable (_ route: API) throws -> URLRequest
-        ) -> ClientOutput
+        buildClient: @escaping @Sendable (_ makeRequest:  @Sendable (_ route: API) throws -> URLRequest) -> ClientOutput
     ) throws where Auth == BearerAuth, AuthRouter == BearerAuth.Router, APIRouter: TestDependencyKey, APIRouter.Value == APIRouter {
         @Dependency(APIRouter.self) var router
         
@@ -129,9 +127,7 @@ extension Client {
         baseURL: URL,
         username: String,
         password: String,
-        buildClient: @escaping @Sendable (
-            _ makeRequest: @escaping @Sendable (_ route: API) throws -> URLRequest
-        ) -> ClientOutput
+        buildClient: @escaping @Sendable (_ makeRequest: @Sendable (_ route: API) throws -> URLRequest ) -> ClientOutput
     ) throws where Auth == BasicAuth, AuthRouter == BasicAuth.Router, APIRouter: TestDependencyKey, APIRouter.Value == APIRouter {
         @Dependency(APIRouter.self) var router
         
