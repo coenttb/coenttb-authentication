@@ -81,4 +81,43 @@ public enum Error: Swift.Error {
     case requestError
 }
 
+extension Client {
+    public init(
+        baseURL: URL,
+        token: String,
+        buildClient: @escaping @Sendable (
+            _ makeRequest: @escaping @Sendable (_ route: API) throws -> URLRequest
+        ) -> ClientOutput
+    ) throws where Auth == BearerAuth, AuthRouter == BearerAuth.Router, APIRouter: TestDependencyKey, APIRouter.Value == APIRouter {
+        @Dependency(APIRouter.self) var router
+        
+        self = Client.init(
+            baseURL: baseURL,
+            auth: .init(token: token),
+            router: router,
+            authRouter: BearerAuth.Router(),
+            buildClient: buildClient
+        )
+    }
+}
 
+extension Client {
+    public init(
+        baseURL: URL,
+        username: String,
+        password: String,
+        buildClient: @escaping @Sendable (
+            _ makeRequest: @escaping @Sendable (_ route: API) throws -> URLRequest
+        ) -> ClientOutput
+    ) throws where Auth == BasicAuth, AuthRouter == BasicAuth.Router, APIRouter: TestDependencyKey, APIRouter.Value == APIRouter {
+        @Dependency(APIRouter.self) var router
+        
+        self = Client.init(
+            baseURL: baseURL,
+            auth: .init(username: username, password: password),
+            router: router,
+            authRouter: BasicAuth.Router(),
+            buildClient: buildClient
+        )
+    }
+}
