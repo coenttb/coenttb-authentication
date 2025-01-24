@@ -72,7 +72,13 @@ AuthRouter.Output == Auth
             }
         }
         
-        return buildClient(makeRequest)[keyPath: keyPath]
+        return withEscapedDependencies { dependencies in
+             buildClient { api in
+                 try dependencies.yield {
+                    try makeRequest(for: api)
+                }
+            }[keyPath: keyPath]
+        }
     }
 }
 
