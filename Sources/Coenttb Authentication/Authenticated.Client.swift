@@ -81,6 +81,8 @@ public enum Error: Swift.Error {
     case requestError
 }
 
+
+// MARK: CONVENIENCES
 extension Client {
     public init(
         baseURL: URL,
@@ -97,6 +99,21 @@ extension Client {
             router: router,
             authRouter: BearerAuth.Router(),
             buildClient: buildClient
+        )
+    }
+}
+
+extension Client where APIRouter: TestDependencyKey, APIRouter.Value == APIRouter {
+    public init(
+        baseURL: URL,
+        token: String,
+        buildClient: @escaping @Sendable () -> ClientOutput
+    ) throws where Auth == BearerAuth, AuthRouter == BearerAuth.Router {
+        @Dependency(APIRouter.self) var router
+        self = try .init(
+            baseURL: baseURL,
+            token: token,
+            buildClient: { _ in buildClient() }
         )
     }
 }
@@ -118,6 +135,23 @@ extension Client {
             router: router,
             authRouter: BasicAuth.Router(),
             buildClient: buildClient
+        )
+    }
+}
+
+extension Client where APIRouter: TestDependencyKey, APIRouter.Value == APIRouter {
+    public init(
+        baseURL: URL,
+        username: String,
+        password: String,
+        buildClient: @escaping @Sendable () -> ClientOutput
+    ) throws where Auth == BasicAuth, AuthRouter == BasicAuth.Router {
+        @Dependency(APIRouter.self) var router
+        self = try .init(
+            baseURL: baseURL,
+            username: username,
+            password: password,
+            buildClient: { _ in buildClient() }
         )
     }
 }
