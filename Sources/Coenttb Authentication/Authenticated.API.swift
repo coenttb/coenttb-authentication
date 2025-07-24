@@ -5,8 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 05/01/2025.
 //
 
-import BearerAuth
-import BasicAuth
+import Authentication
 import URLRouting
 import Foundation
 import Dependencies
