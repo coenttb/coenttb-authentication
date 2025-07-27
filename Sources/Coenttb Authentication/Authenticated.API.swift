@@ -29,8 +29,8 @@ public struct API<
 }
 
 extension API where Auth == BearerAuth {
-    public init(apiKey: String, api: OtherAPI) {
-        self.auth = .init(token: apiKey)
+    public init(apiKey: String, api: OtherAPI) throws {
+        self.auth = try .init(token: apiKey)
         self.api = api
     }
 }

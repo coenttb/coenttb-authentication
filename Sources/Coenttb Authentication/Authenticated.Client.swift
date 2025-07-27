@@ -101,7 +101,7 @@ extension Client {
         
         self = Client.init(
             baseURL: baseURL,
-            auth: .init(token: token),
+            auth: try .init(token: token),
             router: router,
             authRouter: BearerAuth.Router(),
             buildClient: buildClient
@@ -137,7 +137,7 @@ extension Client {
         
         self = Client.init(
             baseURL: baseURL,
-            auth: .init(username: username, password: password),
+            auth: try .init(username: username, password: password),
             router: router,
             authRouter: BasicAuth.Router(),
             buildClient: buildClient
