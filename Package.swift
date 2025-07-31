@@ -13,7 +13,7 @@ extension Target.Dependency {
 
 extension Target.Dependency {
     static var urlRouting: Self { .product(name: "URLRouting", package: "swift-url-routing") }
-    static var coenttbWeb: Self { .product(name: "Coenttb Web", package: "coenttb-web") }
+    static var coenttbServer: Self { .product(name: "Coenttb Server", package: "coenttb-server") }
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
     static var swiftAuthentication: Self { .product(name: "Authentication", package: "swift-authentication") }
 }
@@ -28,7 +28,7 @@ let package = Package(
         .library(name: .coenttbAuthentication, targets: [.coenttbAuthentication]),
     ],
     dependencies: [
-        .package(url: "https://github.com/coenttb/coenttb-web", branch: "main"),
+        .package(url: "https://github.com/coenttb/coenttb-server", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-authentication", branch: "main"),
         .package(url: "https://github.com/pointfreeco/swift-url-routing", from: "0.6.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2"),
@@ -38,7 +38,7 @@ let package = Package(
             name: .coenttbAuthentication,
             dependencies: [
                 .urlRouting,
-                .coenttbWeb,
+                .coenttbServer,
                 .swiftAuthentication,
                 .dependencies,
             ]

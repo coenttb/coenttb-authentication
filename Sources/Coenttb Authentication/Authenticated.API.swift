@@ -9,7 +9,7 @@ import Authentication
 import URLRouting
 import Foundation
 import Dependencies
-import Coenttb_Web
+import Coenttb_Server
 
 #if canImport(FoundationNetworking)
 import FoundationNetworking
